@@ -1,6 +1,25 @@
+<style>
+th, thead {
+    border-top:1pt solid;
+    border-bottom: 2px solid;
+    border-left: none;
+    border-right: none;
+}
+td {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+}
+</style>
+
+# Handling Side Effects
+
 ## <span style="color:lightgreen">React Overview:</span>
 
-<br>
+---
+
+Overview of differences between useState and useEffect
 
 | Main Job                                  | Side Effects                  |
 | ----------------------------------------- | ----------------------------- |
@@ -9,8 +28,6 @@
 | Manage State & Props                      | Send Http Requests to Backend |
 | React to (User) Events & Input            | Set & Manage Timers           |
 | Re-review Component on State/Prop Changes |                               |
-
-<br>
 
 ### <span style="color:turquoise">useEffect() Hook:</span>
 
@@ -22,8 +39,6 @@ Your side effect code goes into this function, and you specify your dependencies
 ```javascript
 useEffect(() => { ... }, [ dependencies ]);
 ```
-
-<br>
 
 ### <span style="color:turquoise">useEffect() Execution:</span>
 
@@ -65,31 +80,31 @@ function App() {
 }
 ```
 
-<br>
-
 ### <span style="color:turquoise">Summary:</span>
 
 useEffect() tells react that after every component function execution it wil re-run the useEffect() function ONLY if there have been changes to any of the dependencies provided
 
 Benefit is being able to have one piece of code, in one place, that reruns wheneve one of the dependencies have changed
 
-<br>
-
 ---
 
+<br>
+
 ## <span style="color:lightgreen">Chosing Dependencies:</span>
+
+---
 
 - You DON'T have to provide state updating function to the dependencies because state updating functions by default are ensured by React to never change and will alway be the same across re-render cycles
 - You DON'T need to add "built-in" APIs or functions like fetch(), localStorage etc (functions and features built-into the browser and hence available globally): These browser APIs / global functions are not related to the React component render cycle and they also never change
 - You also DON'T need to add variables or functions you might've defined OUTSIDE of your components (e.g. if you create a new helper function in a separate file): Such functions or variables also are not created inside of a component function and hence changing them won't affect your components (components won't be re-evaluated if such variables or functions change and vice-versa)
 
-<br>
-
 ---
+
+<br>
 
 ## <span style="color:lightgreen">useEffect Cleanup Function:</span>
 
-<p></p>
+---
 
 Whenever the useEffect functions runs, but before it runs, it will execute this cleanup function below
 
@@ -119,13 +134,13 @@ const Login = props => {
 };
 ```
 
-<br>
-
 ---
+
+<br>
 
 ## <span style="color:lightgreen">useEffect Summary:</span>
 
-<br>
+---
 
 ### <span style="color:turquoise">No Dependencies:</span>
 
