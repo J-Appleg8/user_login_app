@@ -10,13 +10,17 @@ const Login = props => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  ////////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     console.log('Effect running');
-    return () => {};
+
+    return () => {
+      console.log('Effect cleanup');
+    };
   }, [enteredPassword]);
 
-  // After every Login component function execution it will re-run this
-  // useEffect() function only if there have been changes to any of the dependencies
+  // After every component function execution, it will re-run this useEffect()
+  // function only if there have been changes to any of the dependencies
   useEffect(() => {
     const identifier = setTimeout(() => {
       console.log('Checking form validity');
@@ -24,16 +28,15 @@ const Login = props => {
         enteredEmail.includes('@') && enteredPassword.trim().length > 6
       );
     }, 500);
-    // Whenever the useEffect functions runs, but before it runs,
-    // it will execute this cleanup function
+    // When this useEffect() runs, it will execute this cleanup function first
+    // Clears the last timer before setting a new one
     return () => {
-      // Clears the last timer before setting a new one
       clearTimeout(identifier);
-      console.log('Cleanup');
+      console.log('Effect Cleanup');
     };
   }, [enteredEmail, enteredPassword]);
 
-  //////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
   const emailChangeHandler = event => {
     setEnteredEmail(event.target.value);
   };
@@ -42,6 +45,8 @@ const Login = props => {
     setEnteredPassword(event.target.value);
   };
 
+  // Currently deriving one state from the value of another state
+  // Which generally should not be done
   const validateEmailHandler = () => {
     setEmailIsValid(enteredEmail.includes('@'));
   };
@@ -55,6 +60,7 @@ const Login = props => {
     props.onLogin(enteredEmail, enteredPassword);
   };
 
+  ////////////////////////////////////////////////////////////////////////////////
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
